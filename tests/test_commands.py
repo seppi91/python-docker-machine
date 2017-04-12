@@ -7,7 +7,6 @@ import machine
 
 # machine name used for testing
 TEST_MACHINE = os.environ.get("DOCKER_MACHINE", "python-docker-machine")
-
 # invalid machine name
 INVALID_MACHINE = TEST_MACHINE + "-invalid"
 

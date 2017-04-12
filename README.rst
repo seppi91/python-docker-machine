@@ -60,6 +60,10 @@ Now you can run the tests with nose::
     ----------------------------------------------------------------------
     Ran 22 tests in 0.262s
 
+Or wwith more verbose::
+
+	$  nosetests -v
+
 or with tox::
 
     $ tox

@@ -86,7 +86,7 @@ class Machine:
         match = self._match(cmd, regexp)
         return match.group(1)
 
-    def create(self, name, driver='virtualbox', blocking=True):
+    def create(self, name, driver='virtualbox', blocking=True,extra_parameters={}):
         """
         Create a docker machine using the provided name and driver
         NOTE: This takes a loooooong time
@@ -95,11 +95,17 @@ class Machine:
             name (str): the name to give to the machine (must be unique)
             driver: the driver to use to create the machine
             blocking (bool): should wait for completion before exiting
+            extra_parameters OrderedDict: key value for extra content e.g {"--virtualbox-cpu-count":"1", '--digitalocean-private-networking':''} see help of create command
 
         Returns:
             int: error code from the run
         """
-        cmd = ['create', '--driver', driver, name]
+        #[/bin/vikings', '-input', 'eggs.txt', '-output', 'spam spam.txt', '-cmd', "echo '$MONEY'"]
+        if extra_parameters:
+            cmd = ['create', '--driver', driver ] + filter(lambda x: len(x)>0,list(reduce(lambda x, y: x + y, extra_parameters.items()))) + [name] 
+        else:
+            cmd = ['create', '--driver', driver, name]
+            
         if blocking:
             stdout, stderr, errorcode = self._run_blocking(cmd)
         else:
