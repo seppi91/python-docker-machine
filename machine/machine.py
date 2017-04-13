@@ -102,10 +102,9 @@ class Machine:
         """
         #[/bin/vikings', '-input', 'eggs.txt', '-output', 'spam spam.txt', '-cmd', "echo '$MONEY'"]
         if extra_parameters:
-            cmd = ['create', '--driver', driver ] + filter(lambda x: len(x)>0,list(reduce(lambda x, y: x + y, extra_parameters.items()))) + [name] 
+            cmd = ['create', '--driver', driver ] + filter(lambda x: len(x) > 0 and x not in set(["True","true"]) ,list(reduce(lambda x, y: x + y, extra_parameters.items()))) + [name] 
         else:
             cmd = ['create', '--driver', driver, name]
-            
         if blocking:
             stdout, stderr, errorcode = self._run_blocking(cmd)
         else:
